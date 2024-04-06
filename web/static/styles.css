@@ -66,6 +66,7 @@ input {
 /* Стили для кнопок и кастомных файловых инпутов */
 .custom-file-upload,
 button {
+    width: 100%;
     background-color: white;
     color: #4CAF50;
     white-space: normal;

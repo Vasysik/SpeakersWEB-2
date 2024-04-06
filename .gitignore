@@ -1,0 +1,3 @@
+web/static/audio
+web/__pycache__
+web/database.db
