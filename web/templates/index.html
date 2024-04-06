@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Подключение стилей -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    {% include 'nav_menu.html' %}
+
+    <div class="home-container">
+        <div class="bells-container">
+            <h1 class="title">Расписание звонков</h1>
+            <ul class="bells-list">
+                {% for bell in bells %}
+                <li id="bell-{{ bell.id }}" class="{% if bell.isUpcoming %}upcoming-bell{% else %}past-bell{% endif %}">
+                    <span class="bell-info">{{ bell.info }}</span>
+                    <span class="bell-info">Время: {{ bell.time }}, Длительность: {{ bell.duration }}, Выложил: {{ bell.uploaderName }}</span>
+                    <audio controls>
+                        <source src="{{ bell.audioFilePath }}" type="audio/mp3">
+                        Ваш браузер не поддерживает аудио-элемент.
+                    </audio>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="create-bell-container">
+            <h1 class="title">Создать новый звонок</h1>
+            <form>
+                <div class="form-group">
+                    <label>Время:</label>
+                    <input type="datetime-local" value="{% if newBell %}{{ newBell.time }}{% endif %}" onChange="(e) => setNewBell({ ...newBell, time: e.target.value })" step="1">
+                </div>
+                <div class="form-group">
+                    <label>Аудиофайл:</label>
+                    <label class="custom-file-upload">
+                        <span id="selectedFileName">Выбрать файл</span>
+                        <input type="file" id="audioFileInput" accept="audio/*">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Длительность:</label>
+                    <input type="text" id="audioDuration" value="{% if newBell %}{{ newBell.duration }}{% endif %}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Описание:</label>
+                    <input type="text" value="{% if newBell %}{{ newBell.info }}{% endif %}" onChange="(e) => setNewBell({ ...newBell, info: e.target.value })">
+                </div>
+                <div class="form-group">
+                    <label>Выложил:</label>
+                    <input type="text" value="{% if newBell %}{{ newBell.uploaderName }}{% endif %}" disabled>
+                </div>
+                <button type="button" onClick="handleCreateBell">Создать звонок</button>
+                <button type="button" class="emergency-button">Экстренный звонок</button>
+            </form>
+        </div>
+    </div>
+    <!-- Подключение Bootstrap JS и других скриптов -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- JavaScript для обработки выбора аудиофайла -->
+    <script>
+        document.getElementById('audioFileInput').addEventListener('change', function() {
+            var selectedFile = this.files[0];
+            var selectedFileName = selectedFile ? selectedFile.name : 'Выбрать файл';
+            document.getElementById('selectedFileName').textContent = selectedFileName;
+    
+            // Получение длительности аудиофайла
+            var audio = new Audio();
+            audio.src = URL.createObjectURL(selectedFile);
+            audio.addEventListener('loadedmetadata', function() {
+                var duration = audio.duration;
+                var hours = Math.floor(duration / 3600);
+                var minutes = Math.floor((duration % 3600) / 60);
+                var seconds = Math.floor(duration % 60);
+                document.getElementById('audioDuration').value = hours + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+            });
+        });
+    </script>
+</body>
+</html>

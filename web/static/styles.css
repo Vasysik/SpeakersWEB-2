@@ -1,0 +1,229 @@
+/* Общие стили */
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Контейнер для основного содержимого */
+.home-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Заголовок */
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 5px;
+}
+
+/* Стили контейнера для расписания звонков и создания нового звонка, а также для формы логина */
+.bells-container,
+.create-bell-container,
+.login-form {
+    max-width: 40%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Общие стили для форм */
+form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Стили для меток */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #2f2f2f;
+}
+
+/* Стили для инпутов */
+input {
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Стили для кнопок и кастомных файловых инпутов */
+.custom-file-upload,
+button {
+    background-color: white;
+    color: #4CAF50;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    padding: 14px 0;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: auto;
+    outline: none;
+}
+
+/* Стили кнопок и кастомных файловых инпутов при наведении */
+.custom-file-upload:hover,
+button:hover {
+    background-color: #4CAF50;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Стили для файловых инпутов */
+input[type="file"] {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+/* Скрытие полосы прокрутки */
+.bells-list::-webkit-scrollbar {
+    display: none;
+}
+
+/* Стили для списка звонков */
+.bells-list {
+    list-style-type: none;
+    padding: 0;
+    max-height: 500px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Стили для элементов списка звонков */
+.bells-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 100%;
+    font-size: 14px;
+}
+
+/* Стили для предстоящего и прошедшего звонков */
+.upcoming-bell {
+    color: white;
+    background-color: #4CAF50;
+}
+
+.past-bell {
+    color: gray;
+    background-color: #f2f2f2;
+}
+
+/* Стили для информации о звонке */
+.bell-info {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Стили для аудио плеера */
+audio {
+    width: 100%;
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Стили для экстренной кнопки */
+.emergency-button {
+    background-color: white;
+    color: #ff4d4d;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    border: 2px solid #ff4d4d;
+    border-radius: 5px;
+    padding: 14px 0;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 10px;
+}
+
+/* Стили для экстренной кнопки при наведении */
+.emergency-button:hover {
+    background-color: #ff4d4d;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Стили для ссылки в навигационном меню */
+.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Стили для элементов навигационного меню */
+.navbar-nav .nav-item {
+    margin-right: 15px;
+}
+
+/* Стили для ссылок в навигационном меню */
+.navbar-nav .nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+/* Стили для ссылок в навигационном меню при наведении */
+.navbar-nav .nav-link:hover {
+    color: #f0f0f0;
+    transition: color 0.3s;
+}
+
+/* Стили для имени пользователя в навигационном меню */
+.navbar-text {
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 16px;
+    margin-right: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+/* Стили для кнопок "Выйти" и "SpeakersWEB" */
+.navbar-brand:hover,
+.navbar-nav .nav-link:hover {
+    background-color: white;
+    color: #4CAF50 !important;
+    transition: background-color 0.3s, color 0.3s;
+}

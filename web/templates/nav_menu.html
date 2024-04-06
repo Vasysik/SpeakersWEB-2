@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand-sm navbar-light" style="background-color: #4CAF50;">
+    <a class="navbar-brand" href="/" style="color: white; white-space: normal; text-align: center; word-break: break-all; border: 2px solid white; border-radius: 5px; padding: 5px 10px; cursor: pointer; font-weight: bold; transition: background-color 0.3s, color 0.3s;">SpeakersWEB</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            {% if username %}
+                <span class="navbar-text" style="color: #4CAF50; font-weight: bold; font-size: 16px; margin-right: 10px; padding: 8px; border-radius: 5px; background-color: #f9f9f9; border: 1px solid #ddd;">{{ username }}</span>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="/login" style="color: white; white-space: normal; text-align: center; word-break: break-all; border: 2px solid white; border-radius: 5px; padding: 5px 10px; cursor: pointer; font-weight: bold; transition: background-color 0.3s, color 0.3s;">Выйти</a>
+            </li>
+        </ul>
+    </div>
+</nav>
