@@ -14,11 +14,9 @@ while True:
         while True:
             audio_data = db.get_audio_to_play()
             for data in audio_data:
-                # Convert data to a string and send it to the connected client
                 audio_str = ','.join(map(str, data))
                 connection.sendall(audio_str.encode())
-            time.sleep(1)  # Check every second
-
+            time.sleep(1)
     finally:
         print('Connection close...')
         connection.close()

@@ -6,6 +6,8 @@ services:
     image: speakers_bell_server
     container_name: speakers_bell_server
     command: python -u ./server.py
+    ports:
+      - '10180:10180'
     volumes:
       - ./database.db:/database.db
   web_app:
@@ -13,8 +15,7 @@ services:
     image: speakers_web_app
     container_name: speakers_web_app
     ports:
-      - '5000:5000/tcp'
-      - '10180:10180/tcp'
+      - '5000:5000'
     networks:
       - counter-net
     command: python ./app.py

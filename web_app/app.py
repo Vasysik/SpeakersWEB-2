@@ -8,7 +8,6 @@ import db
 app = Flask(__name__)
 username = "John Doe"
 
-# Главная страница
 @app.route('/')
 def index():
     newBell = {
@@ -21,12 +20,10 @@ def index():
     
     return render_template('index.html', newBell=newBell, bells=db.get_all_bells(), current_time=current_time, datetime=datetime)
 
-# Страница логинизации
 @app.route('/login')
 def login():
     return render_template('login.html')
 
-# Создание звонка
 @app.route('/create_bell', methods=['POST'])
 def create_bell():
     info = request.form['info']

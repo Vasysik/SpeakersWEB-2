@@ -9,5 +9,4 @@ def get_audio_to_play():
     current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     cur.execute("SELECT * FROM bells WHERE Time == ?", (current_time,))
     rows = cur.fetchall()
-    print(datetime.datetime.now(), rows)
     return rows
