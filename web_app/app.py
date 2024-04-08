@@ -11,7 +11,6 @@ username = "John Doe"
 # Главная страница
 @app.route('/')
 def index():
-    # Создание переменной newBell
     newBell = {
         "time": "",
         "duration": "",
@@ -27,34 +26,20 @@ def index():
 def login():
     return render_template('login.html')
 
-@app.route('/audio', methods=['POST'])
-def upload_audio():
-    audio_file = request.files['audio']
-
-    os.makedirs(os.path.join('static', 'audio'), exist_ok=True)
-    unique_filename = f"{uuid.uuid4()}-{audio_file.filename}"
-
-    audio_file.save(os.path.join('static', 'audio', unique_filename))
-    
-    audio = AudioSegment.from_file('static/audio/' + audio_file.filename)
-    duration_seconds = len(audio) / 1000
-    
-    return {
-        'filename': audio_file.filename,
-        'duration': duration_seconds
-    }
-
+# Создание звонка
 @app.route('/create_bell', methods=['POST'])
 def create_bell():
     info = request.form['info']
     time_str = request.form['time']
+    if ':' not in time_str[-5:]:
+        time_str += ":00"
     audio_file = request.files['audio']
 
     unique_filename = f"{uuid.uuid4()}-{audio_file.filename}"
 
     audio_file.save(os.path.join('static', 'audio', unique_filename))
 
-    audio = AudioSegment.from_file(os.path.join('static/audio', unique_filename))
+    audio = AudioSegment.from_file(os.path.join('static', 'audio', unique_filename))
     duration = len(audio) / 1000
 
     time = datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S')
@@ -64,4 +49,4 @@ def create_bell():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

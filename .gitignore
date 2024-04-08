@@ -1,3 +1,2 @@
-web/static/audio
-web/__pycache__
-web/database.db
+web_app/static/audio
+database.db

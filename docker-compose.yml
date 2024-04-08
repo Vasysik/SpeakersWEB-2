@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  bell_server:
+    build: ./bell_server
+    image: speakers_bell_server
+    container_name: speakers_bell_server
+    command: python -u ./server.py
+    volumes:
+      - ./database.db:/database.db
+  web_app:
+    build: ./web_app
+    image: speakers_web_app
+    container_name: speakers_web_app
+    ports:
+      - '5000:5000/tcp'
+      - '10180:10180/tcp'
+    networks:
+      - counter-net
+    command: python ./app.py
+    volumes:
+      - ./web_app/static/audio:/static/audio
+      - ./database.db:/database.db
+
+networks:
+  counter-net:
+    driver: bridge
