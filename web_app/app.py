@@ -28,8 +28,7 @@ def login():
 def create_bell():
     info = request.form['info']
     time_str = request.form['time']
-    if ':' not in time_str[-5:]:
-        time_str += ":00"
+
     audio_file = request.files['audio']
 
     unique_filename = f"{uuid.uuid4()}-{audio_file.filename}"
@@ -39,7 +38,11 @@ def create_bell():
     audio = AudioSegment.from_file(os.path.join('static', 'audio', unique_filename))
     duration = len(audio) / 1000
 
-    time = datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S')
+    try:
+        time = datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S')
+    except:
+        time_str += ":00"
+        time = datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S')
 
     db.add_bell(info, time, unique_filename, duration, username)
 
