@@ -30,36 +30,40 @@
             </ul>
         </div>
         <div class="create-bell-container">
-            <h1 class="title">Создать новый звонок</h1>
-            <form action="{{ url_for('create_bell') }}" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label>Время:</label>
-                    <input type="datetime-local" name="time" value="{% if newBell %}{{ newBell.time }}{% endif %}" onChange="(e) => setNewBell({ ...newBell, time: e.target.value })" step="1">
-                </div>
-                <div class="form-group">
-                    <label>Аудиофайл:</label>
-                    <label class="custom-file-upload">
-                        <span id="selectedFileName">Выбрать файл</span>
-                        <input type="file" id="audioFileInput" name="audio" accept="audio/*">
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>Длительность:</label>
-                    <input type="text" id="audioDuration" value="{% if newBell %}{{ newBell.duration }}{% endif %}" disabled>
-                </div>
-                <div class="form-group">
-                    <label>Описание:</label>
-                    <input type="text" name="info" value="{% if newBell %}{{ newBell.info }}{% endif %}" onChange="(e) => setNewBell({ ...newBell, info: e.target.value })">
-                </div>
-                <div class="form-group">
-                    <label>Выложил:</label>
-                    <input type="text" value="{% if newBell %}{{ newBell.uploaderName }}{% endif %}" disabled>
-                </div>
-                <div class="form-group">
-                    <button type="submit">Создать звонок</button>
-                    <button type="button" class="emergency-button">Экстренный звонок</button>
-                </div>
-            </form>
+            {% if username %}
+                <h1 class="title">Создать новый звонок</h1>
+                <form action="{{ url_for('create_bell') }}" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Время:</label>
+                        <input type="datetime-local" name="time" value="{% if newBell %}{{ newBell.time }}{% endif %}" onChange="(e) => setNewBell({ ...newBell, time: e.target.value })" step="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Аудиофайл:</label>
+                        <label class="custom-file-upload">
+                            <span id="selectedFileName">Выбрать файл</span>
+                            <input type="file" id="audioFileInput" name="audio" accept="audio/*">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Длительность:</label>
+                        <input type="text" id="audioDuration" value="{% if newBell %}{{ newBell.duration }}{% endif %}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Описание:</label>
+                        <input type="text" name="info" value="{% if newBell %}{{ newBell.info }}{% endif %}" onChange="(e) => setNewBell({ ...newBell, info: e.target.value })">
+                    </div>
+                    <div class="form-group">
+                        <label>Выложил:</label>
+                        <input type="text" value="{% if newBell %}{{ newBell.uploaderName }}{% endif %}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Создать звонок</button>
+                        <button type="button" class="emergency-button">Экстренный звонок</button>
+                    </div>
+                </form>
+            {% else %}
+                <p>Вы должны быть авторизованы, чтобы создавать новые звонки. <a href="{{ url_for('login') }}">Войдите</a>.</p>
+            {% endif %}
         </div>
     </div>
     <!-- Подключение Bootstrap JS и других скриптов -->

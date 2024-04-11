@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.10-slim
 ADD app.py .
 ADD db.py .
 ADD requirements.txt .

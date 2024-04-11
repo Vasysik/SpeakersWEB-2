@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from pydub import AudioSegment
 from datetime import datetime
 import uuid
@@ -6,7 +6,7 @@ import os
 import db
 
 app = Flask(__name__)
-username = "John Doe"
+app.secret_key = 'your_secret_key'
 
 @app.route('/')
 def index():
@@ -14,15 +14,37 @@ def index():
         "time": "",
         "duration": "",
         "info": "",
-        "uploaderName": username
+        "uploaderName": ""
     }
     current_time = datetime.now()
-    
-    return render_template('index.html', newBell=newBell, bells=db.get_all_bells(), current_time=current_time, datetime=datetime)
 
-@app.route('/login')
+    if 'username' in session:
+        username = session['username']
+        newBell["uploaderName"] = username
+    else:
+        username = None
+
+    current_time = datetime.now()
+    
+    return render_template('index.html', newBell=newBell, bells=db.get_all_bells(), current_time=current_time, datetime=datetime, username=username)
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        input_username = request.form['username']
+        input_password = request.form['password']
+        user = db.get_user(input_username)
+        if user and user['password'] == input_password:
+            session['username'] = input_username
+            return redirect(url_for('index'))
+        else:
+            flash('Invalid username or password')
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 @app.route('/create_bell', methods=['POST'])
 def create_bell():
@@ -44,6 +66,8 @@ def create_bell():
         time_str += ":00"
         time = datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S')
 
+    if 'username' in session:
+        username = session['username']
     db.add_bell(info, time, unique_filename, duration, username)
 
     return redirect(url_for('index'))
