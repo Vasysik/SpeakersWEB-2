@@ -8,25 +8,22 @@ import db
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+def check_login():
+    return 'username' in session
+
 @app.route('/')
 def index():
-    newBell = {
-        "time": "",
-        "duration": "",
-        "info": "",
-        "uploaderName": ""
-    }
-    current_time = datetime.now()
-
     if 'username' in session:
-        username = session['username']
-        newBell["uploaderName"] = username
+        newBell = {
+            "time": "",
+            "duration": "",
+            "info": "",
+            "uploaderName": session['username']
+        }
+        current_time = datetime.now()
+        return render_template('index.html', newBell=newBell, bells=db.get_all_bells(), current_time=current_time, datetime=datetime, username=session['username'])
     else:
-        username = None
-
-    current_time = datetime.now()
-    
-    return render_template('index.html', newBell=newBell, bells=db.get_all_bells(), current_time=current_time, datetime=datetime, username=username)
+        return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -48,6 +45,9 @@ def logout():
 
 @app.route('/create_bell', methods=['POST'])
 def create_bell():
+    if not check_login():
+        return redirect(url_for('login'))
+    
     info = request.form['info']
     time_str = request.form['time']
 
@@ -70,6 +70,14 @@ def create_bell():
         username = session['username']
     db.add_bell(info, time, unique_filename, duration, username)
 
+    return redirect(url_for('index'))
+
+@app.route('/delete_bell/<int:bell_id>', methods=['POST'])
+def delete_bell(bell_id):
+    if not check_login():
+        return redirect(url_for('login'))
+    
+    db.delete_bell(bell_id)
     return redirect(url_for('index'))
 
 if __name__ == '__main__':

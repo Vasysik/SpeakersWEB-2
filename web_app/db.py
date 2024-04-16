@@ -45,6 +45,15 @@ def add_bell(info, time, audio_file, duration, uploader_name):
     conn.commit()
     conn.close()
 
+def delete_bell(bell_id):
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+
+    c.execute("DELETE FROM bells WHERE Id=?", (bell_id,))
+    conn.commit()
+
+    conn.close()
+
 def get_all_bells():
     conn = sqlite3.connect('database.db')
     c = conn.cursor()

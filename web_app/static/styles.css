@@ -65,7 +65,7 @@ input {
 
 /* Стили для кнопок и кастомных файловых инпутов */
 .custom-file-upload,
-button {
+.button {
     width: 100%;
     background-color: white;
     color: #4CAF50;
@@ -85,7 +85,7 @@ button {
 
 /* Стили кнопок и кастомных файловых инпутов при наведении */
 .custom-file-upload:hover,
-button:hover {
+.button:hover {
     background-color: #4CAF50;
     color: white;
     transition: background-color 0.3s, color 0.3s;
@@ -172,6 +172,7 @@ audio {
 /* Стили для экстренной кнопки при наведении */
 .emergency-button:hover {
     background-color: #ff4d4d;
+    border: 2px solid #ff4d4d;
     color: white;
     transition: background-color 0.3s, color 0.3s;
 }
@@ -227,4 +228,33 @@ audio {
     background-color: white;
     color: #4CAF50 !important;
     transition: background-color 0.3s, color 0.3s;
+}
+
+.bell-item {
+    position: relative;
+    padding-right: 30px; /* Добавляем правый внутренний отступ для кнопки удаления */
+}
+
+.delete-button-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-button-container button,
+.delete-button-container:hover button {
+    width: 30px;
+    height: 30px;
+    padding: 0; 
+    /* border: 2px solid #ddd; 
+    background-color: #f2f2f2; */
+    border: none; /* Убираем границы у кнопки */
+    background-color: transparent; /* Делаем фон кнопки прозрачным */
+    font-size: 14px; 
+    cursor: pointer;
 }

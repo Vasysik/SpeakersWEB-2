@@ -9,20 +9,18 @@ services:
     ports:
       - '10180:10180'
     volumes:
-      - ./database.db:/database.db
+      - ./database.db:/database.db:ro
+    environment:
+      TZ: "Europe/Moscow"
   web_app:
     build: ./web_app
     image: speakers_web_app
     container_name: speakers_web_app
     ports:
       - '5000:5000'
-    networks:
-      - counter-net
     command: python ./app.py
     volumes:
       - ./web_app/static/audio:/static/audio
       - ./database.db:/database.db
-
-networks:
-  counter-net:
-    driver: bridge
+    environment:
+      TZ: "Europe/Moscow"
