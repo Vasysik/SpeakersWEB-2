@@ -106,8 +106,8 @@ input[type="file"] {
 /* Стили для списка звонков */
 .bells-list {
     list-style-type: none;
-    padding: 0;
-    max-height: 500px;
+    padding: 0; 
+    max-height: 800px;
     overflow-y: auto;
     scrollbar-width: none;
     border: 1px solid #ddd;
