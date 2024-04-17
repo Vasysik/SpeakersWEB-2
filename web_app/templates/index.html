@@ -70,6 +70,31 @@
                         <button type="button" class="button emergency-button btn btn-danger">Экстренный звонок</button>
                     </div>
                 </form>
+                <div class="modal fade" id="emergencyModal" tabindex="-1" aria-labelledby="emergencyModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="emergencyModalLabel">Выберите чрезвычайную ситуацию</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{ url_for('create_emergency_bell') }}" method="POST" id="emergencyForm">
+                                <div class="modal-body">
+                                    <select class="form-control" name="emergency_type" id="emergencyType">
+                                        <option value="fire">Пожар</option>
+                                        <option value="terrorism">Угроза терроризма</option>
+                                        <!-- Добавьте другие ситуации по мере необходимости -->
+                                    </select>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn btn-danger">Создать экстренный звонок</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             {% else %}
                 <p>Вы должны быть авторизованы, чтобы создавать новые звонки. <a href="{{ url_for('login') }}">Войдите</a>.</p>
             {% endif %}
@@ -105,6 +130,9 @@
                 const closestUpcomingBell = upcomingBells[0];
                 closestUpcomingBell.scrollIntoView({ behavior: "smooth", block: "start" });
             }
+        });
+        document.querySelector(".emergency-button").addEventListener("click", function() {
+            $('#emergencyModal').modal('show');
         });
     </script>
 </body>

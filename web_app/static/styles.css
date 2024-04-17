@@ -258,3 +258,64 @@ audio {
     font-size: 14px; 
     cursor: pointer;
 }
+
+/* Стили для устройств с максимальной шириной 768px (планшеты и мобильные телефоны) */
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;  /* Установка ширины контейнера на 100% экрана */
+    }
+
+    .bells-container,
+    .create-bell-container {
+        max-width: 90%;  /* Ограничение максимальной ширины и установка единой ширины */
+        width: 100%;  /* Позволяет блокам занимать всю доступную ширину */
+        order: 0;  /* Установка порядка для расписания звонков */
+    }
+
+    .create-bell-container {
+        order: 1;  /* Установка порядка для блока создания нового звонка */
+        margin-top: 10px;  /* Добавление отступа между блоками */
+    }
+
+    .title {
+        font-size: 20px;  /* Немного уменьшаем размер заголовка для экономии пространства */
+    }
+
+    form {
+        width: 100%;  /* Установка ширины форм на 100% для улучшения доступности */
+    }
+
+    input[type="file"] + label,
+    .button,
+    .custom-file-upload {
+        font-size: 14px;  /* Уменьшение размера текста для кнопок и меток */
+    }
+}
+
+/* Стили для мобильных телефонов */
+@media (max-width: 480px) {
+    .title {
+        font-size: 18px;
+    }
+
+    label {
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+
+    input[type="file"] + label {
+        font-size: 12px;
+    }
+
+    .bells-list {
+        max-height: 300px;
+    }
+
+    .bells-container,
+    .create-bell-container {
+        max-width: 95%;  /* Дополнительное увеличение доступной ширины на очень маленьких устройствах */
+    }
+}
+

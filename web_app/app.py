@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from pydub import AudioSegment
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid
 import os
 import db
@@ -66,9 +66,27 @@ def create_bell():
         time_str += ":00"
         time = datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S')
 
-    if 'username' in session:
-        username = session['username']
-    db.add_bell(info, time, unique_filename, duration, username)
+    db.add_bell(info, time, unique_filename, duration, session['username'])
+
+    return redirect(url_for('index'))
+
+@app.route('/create_emergency_bell', methods=['POST'])
+def create_emergency_bell():
+    if not check_login():
+        return redirect(url_for('login'))
+
+    emergency_type = request.form['emergency_type']
+    duration = 0
+
+    info = {
+        'fire': 'Пожар',
+        'terrorism': 'Угроза терроризма'
+        # Добавьте другие типы ситуаций по мере необходимости
+    }.get(emergency_type, 'Неизвестная ситуация')
+
+    future_time = (datetime.now() + timedelta(seconds=2)).replace(microsecond=0)
+
+    db.add_bell(info, future_time, f"emergency_audios/{emergency_type}.mp3", duration, session['username'])
 
     return redirect(url_for('index'))
 
