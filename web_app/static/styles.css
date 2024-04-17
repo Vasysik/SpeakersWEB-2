@@ -81,6 +81,8 @@ input {
     transition: background-color 0.3s, color 0.3s;
     margin-top: auto;
     outline: none;
+    position: relative;
+    z-index: 1000;
 }
 
 /* Стили кнопок и кастомных файловых инпутов при наведении */
